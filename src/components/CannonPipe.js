@@ -38,6 +38,7 @@ class CannonPipe extends React.Component<Props> {
         y: 0,
       },
     }
+    
     return (
       <g transform={transform}>
         <path style={cannonPipeStyle}

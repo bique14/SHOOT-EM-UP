@@ -6,6 +6,7 @@ import CannonBase from './CannonBase'
 import CannonPipe from './CannonPipe'
 import CannonBall from './CannonBall'
 import CurrentScore from './CurrentScore'
+import FlyingObject from './FlyingObject'
 
 type Props = {
   trackMouse: Function,
@@ -15,9 +16,6 @@ type Props = {
 class Canvas extends React.Component<Props> {
 
   render() {
-    const style = {
-      border: '1px solid black'
-    }
     const viewBox = [window.innerWidth/-2, 100-window.innerHeight, window.innerWidth, window.innerHeight]
 
     return (
@@ -37,6 +35,8 @@ class Canvas extends React.Component<Props> {
         <CannonBase />
         <CannonBall position={{x: 0, y: -100}}/>
         <CurrentScore score={10}/>
+        <FlyingObject position={{x: -150, y: -300}}/>
+        <FlyingObject position={{x: 150, y: -300}}/>
       </svg>
     )
   }
