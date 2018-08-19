@@ -4,6 +4,7 @@ import Sky from './Sky'
 import Ground from './Ground'
 import CannonBase from './CannonBase'
 import CannonPipe from './CannonPipe'
+import CannonBall from './CannonBall'
 
 type Props = {
   trackMouse: Function,
@@ -27,6 +28,7 @@ class Canvas extends React.Component<Props> {
         <Ground />
         <CannonPipe rotation={this.props.angle}/>
         <CannonBase />
+        <CannonBall position={{x: 0, y: -100}}/>
       </svg>
     )
   }
