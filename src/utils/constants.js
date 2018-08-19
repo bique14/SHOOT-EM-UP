@@ -15,3 +15,5 @@ export const flyingObjectsStarterPositions = [
   150,
   300
 ] // defines four magnitudes on the X axis where objects can spring to life.
+
+export const gameHeight = 1200
