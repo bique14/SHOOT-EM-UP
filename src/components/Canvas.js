@@ -11,10 +11,21 @@ import Heart from './Heart'
 import StartGame from './StartGame'
 import Title from './Title'
 
+type Shape = {
+  x: number,
+  y: number,
+}
+
+type ArrFlyingObject = {
+  position: Shape,
+  id: number,
+}
+
 type Game = {
   started: boolean,
   kills: number,
   lives: number,
+  flyingObjects: [ArrFlyingObject],
 }
 
 type Props = {
@@ -49,19 +60,18 @@ class Canvas extends React.Component<Props> {
         <CurrentScore score={10}/>
         <Heart position={{x: -300, y: 35}} />
 
-        { !this.props.gameState.started &&
+        {!this.props.gameState.started &&
           <g>
             <StartGame onClick={() => this.props.startGame()} />
             <Title />
           </g>
         }
 
-        { this.props.gameState.started &&
-          <g>
-            <FlyingObject position={{x: -150, y: -300}}/>
-            <FlyingObject position={{x: 150, y: -300}}/>
-          </g>
-        }
+      {this.props.gameState.flyingObjects.map(flyingObject => (
+        <FlyingObject key={flyingObject.id}
+          position={flyingObject.position}
+        />
+      ))}
       </svg>
     )
   }

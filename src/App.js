@@ -3,10 +3,21 @@ import './App.css'
 import Canvas from './components/Canvas'
 import { getCanvasPosition } from './utils/formulas'
 
+type Shape = {
+  x: number,
+  y: number,
+}
+
+type ArrFlyingObject = {
+  position: Shape,
+  id: number,
+}
+
 type Game = {
   started: boolean,
   kills: number,
   lives: number,
+  flyingObjects: [ArrFlyingObject],
 }
 
 type Props = {
