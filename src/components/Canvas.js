@@ -5,6 +5,7 @@ import Ground from './Ground'
 import CannonBase from './CannonBase'
 import CannonPipe from './CannonPipe'
 import CannonBall from './CannonBall'
+import CurrentScore from './CurrentScore'
 
 type Props = {
   trackMouse: Function,
@@ -18,6 +19,7 @@ class Canvas extends React.Component<Props> {
       border: '1px solid black'
     }
     const viewBox = [window.innerWidth/-2, 100-window.innerHeight, window.innerWidth, window.innerHeight]
+
     return (
       <svg id="aliens-go-home-canvas"
         preserveAspectRatio="xMaxYMax none"
@@ -29,6 +31,7 @@ class Canvas extends React.Component<Props> {
         <CannonPipe rotation={this.props.angle}/>
         <CannonBase />
         <CannonBall position={{x: 0, y: -100}}/>
+        <CurrentScore score={10}/>
       </svg>
     )
   }
