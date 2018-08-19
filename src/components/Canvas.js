@@ -26,6 +26,11 @@ class Canvas extends React.Component<Props> {
         onMouseMove={this.props.trackMouse}
         viewBox={viewBox}
       >
+        <defs>
+          <filter id="shadow">
+            <feDropShadow dx="1" dy="1" stdDeviation="2" />
+          </filter>
+        </defs>
         <Sky />
         <Ground />
         <CannonPipe rotation={this.props.angle}/>
