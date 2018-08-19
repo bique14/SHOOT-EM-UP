@@ -1,10 +1,16 @@
+// @flow
 import React from 'react'
 import Sky from './Sky'
 import Ground from './Ground'
 import CannonBase from './CannonBase'
 import CannonPipe from './CannonPipe'
 
-class Canvas extends React.Component {
+type Props = {
+  trackMouse: Function,
+  angle: number,
+}
+
+class Canvas extends React.Component<Props> {
 
   render() {
     const style = {
@@ -14,11 +20,12 @@ class Canvas extends React.Component {
     return (
       <svg id="aliens-go-home-canvas"
         preserveAspectRatio="xMaxYMax none"
+        onMouseMove={this.props.trackMouse}
         viewBox={viewBox}
       >
         <Sky />
         <Ground />
-        <CannonPipe rotation={70}/>
+        <CannonPipe rotation={this.props.angle}/>
         <CannonBase />
       </svg>
     )
