@@ -7,6 +7,7 @@ import CannonPipe from './CannonPipe'
 import CannonBall from './CannonBall'
 import CurrentScore from './CurrentScore'
 import FlyingObject from './FlyingObject'
+import Heart from './Heart'
 
 type Props = {
   trackMouse: Function,
@@ -37,6 +38,7 @@ class Canvas extends React.Component<Props> {
         <CurrentScore score={10}/>
         <FlyingObject position={{x: -150, y: -300}}/>
         <FlyingObject position={{x: 150, y: -300}}/>
+        <Heart position={{x: -300, y: 35}} />
       </svg>
     )
   }
