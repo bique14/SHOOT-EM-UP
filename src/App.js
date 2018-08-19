@@ -2,6 +2,19 @@ import React, { Component } from 'react'
 import './App.css'
 import Canvas from './components/Canvas'
 import { getCanvasPosition } from './utils/formulas'
+
+type Game = {
+  started: boolean,
+  kills: number,
+  lives: number,
+}
+
+type Props = {
+  angle: number,
+  gameState: Game,
+  moveObjects: Function,
+  startGame: Function,
+}
 class App extends Component<Props> {
   componentDidMount() {
     setInterval(() => {
@@ -16,7 +29,7 @@ class App extends Component<Props> {
     window.onresize()
   }
 
-  trackMouse(event) {
+  trackMouse(event: any) {
     this.canvasMousePosition = getCanvasPosition(event)
   }
 
@@ -25,6 +38,8 @@ class App extends Component<Props> {
       <div className="App">
         <Canvas angle={this.props.angle}
           trackMouse={event => (this.trackMouse(event))}
+          gameState={this.props.gameState}
+          startGame={this.props.startGame}
         />
       </div>
     )

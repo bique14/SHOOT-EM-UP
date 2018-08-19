@@ -11,9 +11,17 @@ import Heart from './Heart'
 import StartGame from './StartGame'
 import Title from './Title'
 
+type Game = {
+  started: boolean,
+  kills: number,
+  lives: number,
+}
+
 type Props = {
-  trackMouse: Function,
   angle: number,
+  gameState: Game,
+  trackMouse: Function,
+  startGame: Function,
 }
 
 class Canvas extends React.Component<Props> {
@@ -39,11 +47,21 @@ class Canvas extends React.Component<Props> {
         <CannonBase />
         <CannonBall position={{x: 0, y: -100}}/>
         <CurrentScore score={10}/>
-        <FlyingObject position={{x: -150, y: -300}}/>
-        <FlyingObject position={{x: 150, y: -300}}/>
         <Heart position={{x: -300, y: 35}} />
-        <StartGame onClick={() => console.log('Aliens, Go Home!')} />
-        <Title />
+
+        { !this.props.gameState.started &&
+          <g>
+            <StartGame onClick={() => this.props.startGame()} />
+            <Title />
+          </g>
+        }
+
+        { this.props.gameState.started &&
+          <g>
+            <FlyingObject position={{x: -150, y: -300}}/>
+            <FlyingObject position={{x: 150, y: -300}}/>
+          </g>
+        }
       </svg>
     )
   }
