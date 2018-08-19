@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import Canvas from './components/Canvas'
 import { getCanvasPosition } from './utils/formulas'
 class App extends Component<Props> {
@@ -7,6 +7,13 @@ class App extends Component<Props> {
     setInterval(() => {
       this.props.moveObjects(this.canvasMousePosition)
     }, 10)
+
+    window.onresize = () => {
+      const cnv = document.getElementById('aliens-go-home-canvas')
+      cnv.style.width = `${window.innerWidth}px`
+      cnv.style.height = `${window.innerHeight}px`
+    }
+    window.onresize()
   }
 
   trackMouse(event) {
@@ -20,7 +27,7 @@ class App extends Component<Props> {
           trackMouse={event => (this.trackMouse(event))}
         />
       </div>
-    );
+    )
   }
 }
 

@@ -19,7 +19,8 @@ type Props = {
 class Canvas extends React.Component<Props> {
 
   render() {
-    const viewBox = [window.innerWidth/-2, 100-window.innerHeight, window.innerWidth, window.innerHeight]
+    const gameHeight = 1200
+    const viewBox = [window.innerWidth / -2, 100 - gameHeight, window.innerWidth, gameHeight]
 
     return (
       <svg id="aliens-go-home-canvas"
