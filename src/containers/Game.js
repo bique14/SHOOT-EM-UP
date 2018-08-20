@@ -5,7 +5,8 @@ import {
   leaderboardLoaded, 
   loggedIn,
   moveObjects,
-  startGame
+  startGame,
+  shoot,
 } from '../actions/index'
 
 function mapStateToProps(state) {
@@ -30,6 +31,9 @@ function mapDispatchToProps(dispatch) {
     },
     loggedIn: (players) => {
       dispatch(loggedIn(players))
+    },
+    shoot: (mousePosition) => {
+      dispatch(shoot(mousePosition))
     }
   }
 }

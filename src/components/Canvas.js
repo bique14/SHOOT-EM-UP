@@ -53,12 +53,13 @@ class Canvas extends React.Component<Props> {
       { id: 'g7', maxScore: 55, name: 'Luke Oliff', picture: 'https://twitter.com/mroliff/profile_image', },
       { id: 'h8', maxScore: 146, name: 'Sebastián Peyrott', picture: 'https://twitter.com/speyrott/profile_image', },
     ]
-    console.log(this.props.currentPlayer)
+    // console.log('current player :',this.props.currentPlayer)
     return (
       <svg id="aliens-go-home-canvas"
         preserveAspectRatio="xMaxYMax none"
         onMouseMove={this.props.trackMouse}
         viewBox={viewBox}
+        onClick={this.props.shoot}
       >
         <defs>
           <filter id="shadow">
@@ -67,9 +68,15 @@ class Canvas extends React.Component<Props> {
         </defs>
         <Sky />
         <Ground />
+        {this.props.gameState.cannonBalls.map(cannonBall => (
+          <CannonBall
+            key={cannonBall.id}
+            position={cannonBall.position}
+          />
+        ))}
+
         <CannonPipe rotation={this.props.angle}/>
         <CannonBase />
-        <CannonBall position={{x: 0, y: -100}}/>
         <CurrentScore score={10}/>
         <Heart position={{x: -300, y: 35}} />
 
@@ -77,10 +84,6 @@ class Canvas extends React.Component<Props> {
           <g>
             <StartGame onClick={() => this.props.startGame()} />
             <Title />
-            <Leaderboard currentPlayer={leaderboard[6]} 
-              authenticate={signIn} 
-              leaderboard={leaderboard} 
-            />
              <Leaderboard currentPlayer={this.props.currentPlayer} 
               authenticate={signIn} 
               leaderboard={this.props.players} 

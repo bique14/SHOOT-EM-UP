@@ -111,6 +111,10 @@ class App extends Component<Props> {
     this.canvasMousePosition = getCanvasPosition(event)
   }
 
+  shoot() {
+    this.props.shoot(this.canvasMousePosition)
+  }
+
   render() {
     return (
       <div className="App">
@@ -120,6 +124,7 @@ class App extends Component<Props> {
           startGame={this.props.startGame}
           currentPlayer={this.props.currentPlayer}
           players={this.props.players}
+          shoot={this.shoot.bind(this)}
         />
       </div>
     )

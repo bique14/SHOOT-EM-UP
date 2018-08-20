@@ -31,11 +31,24 @@ export const getCanvasPosition = (event) => {
   // mouse position on auto-scaling canvas
   // https://stackoverflow.com/a/10298843/1232793
 
-  const svg = document.getElementById('aliens-go-home-canvas');
-  const point = svg.createSVGPoint();
+  const svg = document.getElementById('aliens-go-home-canvas')
+  const point = svg.createSVGPoint()
 
-  point.x = event.clientX;
-  point.y = event.clientY;
-  const { x, y } = point.matrixTransform(svg.getScreenCTM().inverse());
-  return {x, y};
-};
+  point.x = event.clientX
+  point.y = event.clientY
+  const { x, y } = point.matrixTransform(svg.getScreenCTM().inverse())
+  return {x, y}
+}
+
+const degreesToRadian = degrees => ((degrees * Math.PI) / 180)
+
+export const calculateNextPosition = (x, y, angle, divisor = 300) => {
+  // function for move cannonball
+  const realAngle = (angle * -1) + 90
+  const stepsX = radiansToDegrees(Math.cos(degreesToRadian(realAngle))) / divisor
+  const stepsY = radiansToDegrees(Math.sin(degreesToRadian(realAngle))) / divisor
+  return {
+    x: x + stepsX,
+    y: y - stepsY,
+  }
+}
