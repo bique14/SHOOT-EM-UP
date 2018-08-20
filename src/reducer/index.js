@@ -1,4 +1,6 @@
 import {
+  LEADERBOARD_LOADED, 
+  LOGGED_IN,
   MOVE_OBJECTS, 
   START_GAME
 } from '../actions'
@@ -11,6 +13,8 @@ const initialGameState = {
   lives: 3,
   flyingObjects: [],
   lastObjectCreatedAt: new Date(),
+  currentPlayer: null,
+  playes: null,
 }
 
 const initialState = {
@@ -20,6 +24,16 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch(action.type) {
+    case LEADERBOARD_LOADED:
+      return {
+        ...state,
+        players: action.players,
+      }
+    case LOGGED_IN:
+      return {
+        ...state,
+        currentPlayer: action.players,
+      }
     case MOVE_OBJECTS:
       return moveObjects(state, action)
     case START_GAME:
