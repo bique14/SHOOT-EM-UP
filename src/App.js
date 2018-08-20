@@ -42,6 +42,12 @@ Auth0.configure({
 })
 
 class App extends Component<Props> {
+  constructor(props) {
+    super(props)
+    this.socket = null
+    this.currentPlayer = null
+  }
+
   componentDidMount() {
     //  if the player is returning from Auth0 after authenticating. This function simply tries to fetch tokens from the URL and, if it succeeds, fetches the player profile and persists everything in the localstorage.
     Auth0.handleAuthCallback()
@@ -52,24 +58,24 @@ class App extends Component<Props> {
         return
       }
 
-      const playerProfile = Auth0.getProfile()
-      const currentPlayer = {
-        id: playerProfile.sub,
+      this.playerProfile = Auth0.getProfile()
+      this.currentPlayer = {
+        id: this.playerProfile.sub,
         maxScore: 0,
-        name: playerProfile.name,
-        picture: playerProfile.picture,
+        name: this.playerProfile.name,
+        picture: this.playerProfile.picture,
       }
 
       // create the currentPlayer constant and update the Redux store 
-      this.props.loggedIn(currentPlayer)
+      this.props.loggedIn(this.currentPlayer)
 
       // connect to your real-time service
-      const socket = io('http://localhost:3001', {
+      this.socket = io('http://localhost:3001', {
         query: `token=${Auth0.getAccessToken()}`,
       })
 
       let emitted = false
-      socket.on('players', (players) => {
+      this.socket.on('players', (players) => {
         // listen to the players event emitted by your real-time service 
         // to update the Redux store
         this.props.leaderboardLoaded(players)
@@ -77,21 +83,14 @@ class App extends Component<Props> {
         if (emitted) {
           return
         }
-        socket.emit('new-max-score', {
-          id: playerProfile.sub,
-          maxScore: 120,
-          name: playerProfile.name,
-          picture: playerProfile.picture,
-        })
-        emitted = true
-        setTimeout(() => {
-          socket.emit('new-max-score', {
-            id: playerProfile.sub,
-            maxScore: 222,
-            name: playerProfile.name,
-            picture: playerProfile.picture,
+        this.socket.on('players', (players) => {
+          this.props.leaderboardLoaded(players);
+          players.forEach((player) => {
+            if (player.id === this.currentPlayer.id) {
+              this.currentPlayer.maxScore = player.maxScore;
+            }
           })
-        }, 5000)
+        })
       })
     })
 
@@ -105,6 +104,19 @@ class App extends Component<Props> {
       cnv.style.height = `${window.innerHeight}px`
     }
     window.onresize()
+  }
+
+  // to check if players have reached a new maxScore. 
+  // If so, your game emits a new-max-score event to update the leaderboard.
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.gameState.started && this.props.gameState.started) {
+      if (this.currentPlayer.maxScore < this.props.gameState.kills) {
+        this.socket.emit('new-max-score', {
+          ...this.currentPlayer,
+          maxScore: this.props.gameState.kills,
+        });
+      }
+    }
   }
 
   trackMouse(event: any) {
