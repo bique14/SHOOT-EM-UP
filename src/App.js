@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import * as Auth0 from 'auth0-web'
+
 import './App.css'
 import Canvas from './components/Canvas'
 import { getCanvasPosition } from './utils/formulas'
+
+const AUTH = require('./utils/secret')
 
 type Shape = {
   x: number,
@@ -26,8 +30,25 @@ type Props = {
   moveObjects: Function,
   startGame: Function,
 }
+
+Auth0.configure({
+  domain: AUTH.DOMAIN,
+  clientID: AUTH.CLIENT_ID,
+  redirectUri: 'http://localhost:3000/',
+  responseType: 'token id_token',
+  scope: 'openid profile manage:points',
+})
+
 class App extends Component<Props> {
   componentDidMount() {
+    //  if the player is returning from Auth0 after authenticating. This function simply tries to fetch tokens from the URL and, if it succeeds, fetches the player profile and persists everything in the localstorage.
+    Auth0.handleAuthCallback()
+
+    // function to log if the player is authenticated or not
+    Auth0.subscribe((auth) => {
+      console.log(auth);
+    })
+
     setInterval(() => {
       this.props.moveObjects(this.canvasMousePosition)
     }, 10)
