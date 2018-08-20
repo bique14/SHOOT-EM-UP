@@ -4,7 +4,7 @@ import { pathFromBezierCurve } from '../utils/formulas'
 class CannonBase extends React.Component {
   render() {
     const cannonBaseStyle = {
-      fill: '#a16012',
+      fill: '#592604',
       stroke: '#75450e',
       strokeWidth: '2px',
     }

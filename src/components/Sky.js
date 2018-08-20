@@ -4,7 +4,7 @@ import { skyAndGroundWidth } from '../utils/constants.js'
 class Sky extends React.Component {
   render() {
     const skyStyle = {
-      fill: '#30abef'
+      fill: '#0885d3',
     }
     const gameHeight = 1200
     

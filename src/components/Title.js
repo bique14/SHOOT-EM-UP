@@ -11,7 +11,7 @@ class Title extends React.Component {
   
     const aliensLineCurve = {
       initialAxis: {
-        x: -190,
+        x: -150,
         y: -950,
       },
       initialControlPoint: {
@@ -20,7 +20,7 @@ class Title extends React.Component {
       },
       endingControlPoint: {
         x: 285,
-        y: -50,
+        y: -0,
       },
       endingAxis: {
         x: 380,
@@ -31,16 +31,16 @@ class Title extends React.Component {
     const goHomeLineCurve = {
       ...aliensLineCurve,
       initialAxis: {
-        x: -250,
+        x: -180,
         y: -780,
       },
       initialControlPoint: {
         x: 125,
-        y: -90,
+        y: -100,
       },
       endingControlPoint: {
         x: 375,
-        y: -90,
+        y: -0,
       },
       endingAxis: {
         x: 500,
@@ -60,12 +60,12 @@ class Title extends React.Component {
         </defs>
         <text {...textStyle}>
           <textPath xlinkHref="#AliensPath">
-            Aliens,
+            Shoot'
           </textPath>
         </text>
         <text {...textStyle}>
           <textPath xlinkHref="#GoHomePath">
-            Go Home!
+            em up!
           </textPath>
         </text>
       </g>

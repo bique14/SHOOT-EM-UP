@@ -9,9 +9,9 @@ type Props = {
 class CannonPipe extends React.Component<Props> {
   render() {
     const cannonPipeStyle = {
-      fill: '#999',
-      stroke: '#666',
-      strokeWidth: '2px',
+      fill: '#2b2b2b',
+      stroke: '#000000',
+      strokeWidth: '1px',
     }
     const transform = `rotate(${this.props.rotation}, 0, 0)`
   

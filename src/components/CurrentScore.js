@@ -9,14 +9,14 @@ class CurrentScore extends React.Component<Props> {
   render() {
     const scoreStyle = {
       fontFamily: '"Joti One", cursive',
-      fontSize: 80,
+      fontSize: 60,
       fill: '#d6d33e',
     }
 
     return (
       <g filter="url(#shadow)">
-        <text style={scoreStyle} x="300" y="80">
-          {this.props.score}
+        <text style={scoreStyle} x="350" y="70">
+          SCORE: {this.props.score}
         </text>
       </g>
     )
