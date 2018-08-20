@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as Auth0 from 'auth0-web'
+import io from 'socket.io-client'
 
 import './App.css'
 import Canvas from './components/Canvas'
@@ -37,6 +38,7 @@ Auth0.configure({
   redirectUri: 'http://localhost:3000/',
   responseType: 'token id_token',
   scope: 'openid profile manage:points',
+  audience: 'https://aliens-go-home.digituz.com.br',
 })
 
 class App extends Component<Props> {
@@ -46,7 +48,51 @@ class App extends Component<Props> {
 
     // function to log if the player is authenticated or not
     Auth0.subscribe((auth) => {
-      console.log(auth);
+      if (!auth) {
+        return
+      }
+
+      const playerProfile = Auth0.getProfile()
+      const currentPlayer = {
+        id: playerProfile.sub,
+        maxScore: 0,
+        name: playerProfile.name,
+        picture: playerProfile.picture,
+      }
+
+      // create the currentPlayer constant and update the Redux store 
+      this.props.loggedIn(currentPlayer)
+
+      // connect to your real-time service
+      const socket = io('http://localhost:3001', {
+        query: `token=${Auth0.getAccessToken()}`,
+      })
+
+      let emitted = false
+      socket.on('players', (players) => {
+        // listen to the players event emitted by your real-time service 
+        // to update the Redux store
+        this.props.leaderboardLoaded(players)
+
+        if (emitted) {
+          return
+        }
+        socket.emit('new-max-score', {
+          id: playerProfile.sub,
+          maxScore: 120,
+          name: playerProfile.name,
+          picture: playerProfile.picture,
+        })
+        emitted = true
+        setTimeout(() => {
+          socket.emit('new-max-score', {
+            id: playerProfile.sub,
+            maxScore: 222,
+            name: playerProfile.name,
+            picture: playerProfile.picture,
+          })
+        }, 5000)
+      })
     })
 
     setInterval(() => {
@@ -72,6 +118,8 @@ class App extends Component<Props> {
           trackMouse={event => (this.trackMouse(event))}
           gameState={this.props.gameState}
           startGame={this.props.startGame}
+          currentPlayer={this.props.currentPlayer}
+          players={this.props.players}
         />
       </div>
     )

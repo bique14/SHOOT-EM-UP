@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 import { signIn } from 'auth0-web'
 
@@ -54,7 +53,7 @@ class Canvas extends React.Component<Props> {
       { id: 'g7', maxScore: 55, name: 'Luke Oliff', picture: 'https://twitter.com/mroliff/profile_image', },
       { id: 'h8', maxScore: 146, name: 'Sebastián Peyrott', picture: 'https://twitter.com/speyrott/profile_image', },
     ]
-
+    console.log(this.props.currentPlayer)
     return (
       <svg id="aliens-go-home-canvas"
         preserveAspectRatio="xMaxYMax none"
@@ -81,6 +80,10 @@ class Canvas extends React.Component<Props> {
             <Leaderboard currentPlayer={leaderboard[6]} 
               authenticate={signIn} 
               leaderboard={leaderboard} 
+            />
+             <Leaderboard currentPlayer={this.props.currentPlayer} 
+              authenticate={signIn} 
+              leaderboard={this.props.players} 
             />
             <Login authenticate={signIn} />
           </g>
