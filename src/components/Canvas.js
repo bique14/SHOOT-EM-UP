@@ -1,5 +1,7 @@
 // @flow
 import React from 'react'
+import { signIn } from 'auth0-web'
+
 import Sky from './Sky'
 import Ground from './Ground'
 import CannonBase from './CannonBase'
@@ -10,6 +12,7 @@ import FlyingObject from './FlyingObject'
 import Heart from './Heart'
 import StartGame from './StartGame'
 import Title from './Title'
+import Login from './Login'
 
 type Shape = {
   x: number,
@@ -64,6 +67,7 @@ class Canvas extends React.Component<Props> {
           <g>
             <StartGame onClick={() => this.props.startGame()} />
             <Title />
+            <Login authenticate={signIn} />
           </g>
         }
 
