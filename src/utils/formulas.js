@@ -52,3 +52,9 @@ export const calculateNextPosition = (x, y, angle, divisor = 300) => {
     y: y - stepsY,
   }
 }
+
+export const checkCollision = (rectA, rectB) => (
+  // detect collision (cannon balls touch to UFO)
+  rectA.x1 < rectB.x2 && rectA.x2 > rectB.x1 &&
+  rectA.y1 < rectB.y2 && rectA.y2 > rectB.y1
+)
