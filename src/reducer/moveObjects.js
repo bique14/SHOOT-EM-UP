@@ -18,6 +18,24 @@ function moveObjects(state, action) {
   let flyingObjects = newState.gameState.flyingObjects.filter(object => (
     (now - object.createdAt) < 4000
   ))
+
+  // compare the current length of the flyingObjects array with the one from the original state
+  const lostLife = state.gameState.flyingObjects.length > flyingObjects.length
+  let lives = state.gameState.lives
+  if (lostLife) {
+    lives--
+  }
+  
+  // check Game over!
+  // when lives <= 0, started = false
+  // started: flase => show title game
+  const started = lives > 0
+  if (!started) {
+    flyingObjects = []
+    cannonBalls = []
+    lives = 3
+  }
+
   const { x, y } = mousePosition
   const angle = calculateAngle(0, 0, x, y)
 
@@ -34,7 +52,9 @@ function moveObjects(state, action) {
     gameState: {
       ...newState.gameState,
       flyingObjects,
-      cannonBalls
+      cannonBalls: [...cannonBalls],
+      lives,
+      started
     },
     angle,
   }
