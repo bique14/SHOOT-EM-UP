@@ -76,7 +76,7 @@ class Canvas extends React.Component<Props> {
 
         <CannonPipe rotation={this.props.angle}/>
         <CannonBase />
-        <CurrentScore score={10}/>
+        <CurrentScore score={this.props.gameState.kills} />
 
         {!this.props.gameState.started &&
           <g>

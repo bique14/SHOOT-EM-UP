@@ -42,10 +42,11 @@ function moveObjects(state, action) {
   const objectsDestroyed = checkCollisions(cannonBalls, flyingObjects)
   const cannonBallsDestroyed = objectsDestroyed.map(object => (object.cannonBallId))
   const flyingDiscsDestroyed = objectsDestroyed.map(object => (object.flyingDiscId))
-
   cannonBalls = cannonBalls.filter(cannonBall => (cannonBallsDestroyed.indexOf(cannonBall.id)))
   flyingObjects = flyingObjects.filter(flyingDisc => (flyingDiscsDestroyed.indexOf(flyingDisc.id)))
-
+  
+  // count score
+  const kills = state.gameState.kills + flyingDiscsDestroyed.length
 
   return {
     ...newState,
@@ -54,7 +55,8 @@ function moveObjects(state, action) {
       flyingObjects,
       cannonBalls: [...cannonBalls],
       lives,
-      started
+      started,
+      kills,
     },
     angle,
   }
